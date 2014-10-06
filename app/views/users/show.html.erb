@@ -1,0 +1,28 @@
+<h1>Goals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Completed?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.goals.each do |goal| %>
+      <% next if @user != current_user && goal.private %>
+      <tr>
+        <td><%= goal.title %></td>
+        <td><%= goal.body %></td>
+        <td><%= goal.completed %></td>
+        <td><%= link_to "Edit Goal", edit_goal_url(goal) %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td><%= link_to "Create New Goal", new_user_goal_url(@user) %></td>
+    </tr>
+  </tbody>
+</table>
+
+
