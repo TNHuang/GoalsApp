@@ -8,6 +8,15 @@
 </head>
 <body>
 
+<% if flash[:errors] %>
+<%= flash[:errors] %>
+<% end %>
+
+<% if signed_in? %>
+  <h1>Welcome <%= current_user.username %></h1>
+<% end %>
+
+
 <%= yield %>
 
 </body>
