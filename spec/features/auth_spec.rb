@@ -57,14 +57,59 @@ end
 
 feature "logging in" do
 
-  it "shows username on the homepage after login"
+  before :each do
+    sign_up_as_kenny
+    click_button "Log Out"
+  end
+
+  it "should have username and password" do
+    visit "/session/new"
+    expect(page).to have_content("Username")
+    expect(page).to have_content("Password")
+  end
+
+  it "should have a submit button" do
+    visit "/session/new"
+    expect(page).to have_button("Sign In")
+  end
+
+  it "should validate the presence of user's username" do
+    visit "/session/new"
+    click_button 'Sign In'
+    expect(page).to have_content("Sign In")
+    expect(page).to have_content("Invalid username or password")
+  end
+
+  it "should validate the correct password" do
+    visit "/session/new"
+    fill_in('Username', with: 'kenny')
+    fill_in('Password', with: 'kenny')
+    click_button 'Sign In'
+    expect(page).to have_content("Sign In")
+    expect(page).to have_content("Invalid username or password")
+  end
+
+  it "shows username on the homepage after login" do
+    sign_in_as_kenny
+    expect(page).to have_content("Welcome kenny")
+  end
 
 end
 
 feature "logging out" do
+  before :each do
+    sign_up_as_kenny
+    click_button "Log Out"
+  end
 
-  it "begins with logged out state"
+  it "begins with logged out state" do
+    expect(page).to have_no_content("Welcome kenny")
+  end
 
-  it "doesn't show username on the homepage after logout"
+  it "doesn't show username on the homepage after logout" do
+    visit root_url
+    expect(page).to have_no_content("Welcome kenny")
+
+  end
 
 end

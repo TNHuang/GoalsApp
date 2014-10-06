@@ -50,3 +50,5 @@ group :test do
   gem 'capybara', '~> 2.4.3'
   gem 'rspec-rails', '~> 3.1.0'
 end
+
+gem 'nyan-cat-formatter'

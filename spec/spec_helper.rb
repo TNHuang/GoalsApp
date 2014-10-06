@@ -97,3 +97,14 @@ def sign_up_as_kenny
   sign_up_as('kenny', 'password')
 end
 
+def sign_in_as(username, password)
+  visit "/session/new"
+  fill_in('Username', with: username)
+  fill_in('Password', with: password)
+  click_button "Sign In"
+end
+
+def sign_in_as_kenny
+  sign_in_as("kenny", "password")
+end
+
