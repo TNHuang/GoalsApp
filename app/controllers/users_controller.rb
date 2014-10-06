@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  before_action :require_no_user, only: [:create, :new]
   def new
     @user = User.new
     render :new

@@ -34,6 +34,12 @@ class GoalsController < ApplicationController
     end
   end
 
+
+  def destroy
+    @goal = Goal.find(params[:id])
+    @goal.destroy
+    redirect_to user_url(@goal.user)
+  end
   private
   def goal_params
     params.require(:goal).permit(:title, :body, :private, :completed)

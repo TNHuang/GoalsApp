@@ -109,12 +109,48 @@ feature "goals" do
     end
 
     feature "destroy goal" do
-
+      it "should not find the goal after it has been destroyed" do
+        click_button ("Destroy Goal")
+        expect(page).to have_no_content( "Try to take over the world")
+      end
     end
   end
 
 
 
+  feature "private goals" do
+    before :each do
+      click_link('Create New Goal')
+      fill_in("Title", with: "Try to take over the world")
+      fill_in("Body", with: "The same thing we do every night, pinky.")
+      choose("Private")
+      click_button("Submit Goal")
+
+      click_link('Create New Goal')
+      fill_in("Title", with: "Maybe next time")
+      fill_in("Body", with: "There is no time better than now")
+      choose("Public")
+      click_button("Submit Goal")
+
+      click_button("Log Out")
+    end
+
+    it "should be unable to see private goal" do
+      kenny = User.first
+      sign_up_as("Jimmy", "123456")
+      visit user_url(kenny)
+      expect(page).to have_no_content("Try to take over the world")
+    end
+
+    it "should be able to see public goal" do
+      kenny = User.first
+      sign_up_as("Jimmy", "123456")
+      visit user_url(kenny)
+      expect(page).to have_content("Maybe next time")
+    end
+
+
+  end
 
 
   # it 'should be able to see goals' do
